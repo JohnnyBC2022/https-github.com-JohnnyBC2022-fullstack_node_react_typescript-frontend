@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import NewProductForm from "../components/NewProductForm";
 
 export default function NewProduct() {
   return (
@@ -12,6 +13,8 @@ export default function NewProduct() {
           Volver a Productos
         </Link>
       </div>
+
+      <NewProductForm/>
     </>
   );
 }
