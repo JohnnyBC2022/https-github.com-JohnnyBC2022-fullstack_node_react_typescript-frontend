@@ -1,5 +1,6 @@
 import { ActionFunctionArgs, Form, useActionData } from "react-router-dom";
-import ErrorMesage from "./ErrorMesage";
+import ErrorMessage from "./ErrorMessage";
+import { addProduct } from "../services/ProductService";
 
 export async function action({ request } : ActionFunctionArgs) {
   const data = Object.fromEntries(await request.formData());
@@ -12,6 +13,9 @@ export async function action({ request } : ActionFunctionArgs) {
   if (error.length) {
     return error;
   }
+
+  addProduct(data)
+
   return {};
 }
 
@@ -19,7 +23,7 @@ export default function NewProductForm() {
   const error = useActionData() as string;
   return (
     <>
-    {error && <ErrorMesage>{error}</ErrorMesage>}
+    {error && <ErrorMessage>{error}</ErrorMessage>}
       <Form className="mt-10" method="POST">
         <div className="mb-4">
           <label className="text-slate-800 font-bold" htmlFor="name">
