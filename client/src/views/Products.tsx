@@ -1,15 +1,23 @@
 import { Link } from "react-router-dom";
+import { getProducts } from "../services/ProductService";
+
+export async function loader() {
+  const products = await getProducts()
+  console.log(products)
+  
+  return {}
+}
 
 export default function Products() {
   return (
     <>
       <div className="flex justify-between">
         <h2 className="text-4xl font-black text-slate-700">Productos</h2>
-        <Link 
-        to="productos/nuevo"
-        className="rounded-md bg-teal-600 p-3 text-sm font-bold text-white shadow-sm hover:bg-teal-500"
+        <Link
+          to="productos/nuevo"
+          className="rounded-md bg-teal-600 p-3 text-sm font-bold text-white shadow-sm hover:bg-teal-500"
         >
-            Agregar Producto
+          Agregar Producto
         </Link>
       </div>
     </>
