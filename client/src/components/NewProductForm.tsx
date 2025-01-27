@@ -1,34 +1,28 @@
-import { Form, useActionData } from "react-router-dom"
+import { ActionFunctionArgs, Form, useActionData } from "react-router-dom";
+import ErrorMesage from "./ErrorMesage";
 
-export async function action({request}) {
-  const data = Object.fromEntries(await request.formData())
-  
-  let error = ''
-  if(Object.values(data).includes('')) {
-    error = 'Todos los campos son obligatorios'
+export async function action({ request } : ActionFunctionArgs) {
+  const data = Object.fromEntries(await request.formData());
+
+  let error = "";
+  if (Object.values(data).includes("")) {
+    error = "Todos los campos son obligatorios";
   }
 
-  if(error.length) {
-    return error
+  if (error.length) {
+    return error;
   }
-  return {}
+  return {};
 }
 
 export default function NewProductForm() {
-
-  const error = useActionData()
-  console.log(error)
+  const error = useActionData() as string;
   return (
     <>
-        <Form 
-        className="mt-10"
-        method="POST"
-        >
+    {error && <ErrorMesage>{error}</ErrorMesage>}
+      <Form className="mt-10" method="POST">
         <div className="mb-4">
-          <label
-            className="text-slate-800 font-bold"
-            htmlFor="name"
-          >
+          <label className="text-slate-800 font-bold" htmlFor="name">
             Nombre Producto:
           </label>
           <input
@@ -40,10 +34,7 @@ export default function NewProductForm() {
           />
         </div>
         <div className="mb-4">
-          <label
-            className="text-slate-800 font-bold"
-            htmlFor="price"
-          >
+          <label className="text-slate-800 font-bold" htmlFor="price">
             Precio:
           </label>
           <input
@@ -61,5 +52,5 @@ export default function NewProductForm() {
         />
       </Form>
     </>
-  )
+  );
 }
