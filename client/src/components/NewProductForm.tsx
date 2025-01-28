@@ -1,6 +1,7 @@
-import { ActionFunctionArgs, Form, useActionData, redirect } from "react-router-dom";
+import { ActionFunctionArgs, Form, useActionData, redirect, useLoaderData } from "react-router-dom";
 import ErrorMessage from "./ErrorMessage";
 import { addProduct } from "../services/ProductService";
+import { Product } from "../types";
 
 export async function action({ request } : ActionFunctionArgs) {
   const data = Object.fromEntries(await request.formData());
@@ -21,6 +22,8 @@ export async function action({ request } : ActionFunctionArgs) {
 
 export default function NewProductForm() {
   const error = useActionData() as string;
+
+  const product = useLoaderData() as Product
   return (
     <>
     {error && <ErrorMessage>{error}</ErrorMessage>}
@@ -35,6 +38,7 @@ export default function NewProductForm() {
             className="mt-2 block w-full p-3 bg-slate-100"
             placeholder="Nombre del producto..."
             name="name"
+            defaultValue={product.name}
           />
         </div>
         <div className="mb-4">
@@ -47,6 +51,7 @@ export default function NewProductForm() {
             className="mt-2 block w-full p-3 bg-slate-100"
             placeholder="Precio del producto, ej. 200,300"
             name="price"
+            defaultValue={product.price}
           />
         </div>
         <input

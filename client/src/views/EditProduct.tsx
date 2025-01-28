@@ -1,7 +1,20 @@
-import { Link } from "react-router-dom";
+import { Link, LoaderFunctionArgs, redirect} from "react-router-dom";
 import NewProductForm from "../components/NewProductForm";
+import { getProductById } from "../services/ProductService";
+
+export async function loader({params}: LoaderFunctionArgs){
+  if(params.id !== undefined) {
+      const product = await getProductById(+params.id)
+      if(!product) {
+        //throw new Response('', {status: 404, statusText: 'Producto No Encontrado'})
+        return redirect('/')
+      }
+      return product
+  }
+}
 
 export default function EditProduct() {
+    
   return (
     <>
       <div className="flex justify-between">
