@@ -2,6 +2,7 @@ import {
   ActionFunctionArgs,
   Form,
   redirect,
+  useFetcher,
   useNavigate,
 } from "react-router-dom";
 import { Product } from "../types";
@@ -20,6 +21,7 @@ export async function action({ params }: ActionFunctionArgs) {
 }
 
 export default function ProductDetails({ product }: ProductDetailsProps) {
+  const fetcher = useFetcher(); // Este Hook sirve para hacer interacciones en la página sin cambiar de componente. Por ejemplo, dar un like
   const navigate = useNavigate();
   const isAvailable = product.availability;
   return (
@@ -29,14 +31,18 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
         {formatCurrency(product.price)}
       </td>
       <td className="p-3 text-lg text-gray-800">
-        <form method="POST">
+        <fetcher.Form method="POST">
           <button
-            type='button'
-            name="availability"
-            value={product.availability.toString()}
-            className={`${isAvailable ? 'text-black' : 'text-red-600'} rounded-lg p-2 text-xs uppercase font-bold w-full border border-gray-800 hover:cursor-pointer hover:bg-gray-100`}
-          >{isAvailable ? "Disponible" : "No Disponible"}</button>
-        </form>
+            type="submit"
+            name="id"
+            value={product.id}
+            className={`${
+              isAvailable ? "text-black" : "text-red-600"
+            } rounded-lg p-2 text-xs uppercase font-bold w-full border border-gray-800 hover:cursor-pointer hover:bg-gray-100`}
+          >
+            {isAvailable ? "Disponible" : "No Disponible"}
+          </button>
+        </fetcher.Form>
       </td>
       <td className="p-3 text-lg text-gray-800">
         <div className="flex gap-2 items-center">
