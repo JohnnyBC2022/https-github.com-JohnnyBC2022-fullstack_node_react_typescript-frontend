@@ -4,15 +4,18 @@ import ProductDetails from "../components/ProductDetails";
 import { Product } from "../types";
 
 export async function loader() {
-  const products = await getProducts()  
-  
-  return products
+  const products = await getProducts();
+
+  return products;
+}
+
+export async function action() {
+  console.log('Desde action ac')
+  return {}
 }
 
 export default function Products() {
-
-  const products = useLoaderData() as Product[]
-  
+  const products = useLoaderData() as Product[];
 
   return (
     <>
@@ -37,15 +40,11 @@ export default function Products() {
             </tr>
           </thead>
           <tbody>
-            {products.map(product=> (
-              <ProductDetails
-                key={product.id}
-                product={product}
-               />
+            {products.map((product) => (
+              <ProductDetails key={product.id} product={product} />
             ))}
           </tbody>
         </table>
-
       </div>
     </>
   );

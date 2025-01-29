@@ -29,7 +29,14 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
         {formatCurrency(product.price)}
       </td>
       <td className="p-3 text-lg text-gray-800">
-        {isAvailable ? "Disponible" : "No Disponible"}
+        <form method="POST">
+          <button
+            type='button'
+            name="availability"
+            value={product.availability.toString()}
+            className={`${isAvailable ? 'text-black' : 'text-red-600'} rounded-lg p-2 text-xs uppercase font-bold w-full border border-gray-800 hover:cursor-pointer hover:bg-gray-100`}
+          >{isAvailable ? "Disponible" : "No Disponible"}</button>
+        </form>
       </td>
       <td className="p-3 text-lg text-gray-800">
         <div className="flex gap-2 items-center">
@@ -44,10 +51,12 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
             className="w-full"
             method="POST"
             action={`productos/${product.id}/eliminar`} //importante! esta url debe ser la misma que en el router
-            onSubmit={(e)=>{
-                if(!confirm('¿Está seguro de que quieres eliminar este producto?')){
-                    e.preventDefault()
-                }
+            onSubmit={(e) => {
+              if (
+                !confirm("¿Está seguro de que quieres eliminar este producto?")
+              ) {
+                e.preventDefault();
+              }
             }}
           >
             <input
