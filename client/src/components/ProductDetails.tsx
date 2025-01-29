@@ -1,15 +1,22 @@
-import { ActionFunctionArgs, Form, redirect, useNavigate } from "react-router-dom";
+import {
+  ActionFunctionArgs,
+  Form,
+  redirect,
+  useNavigate,
+} from "react-router-dom";
 import { Product } from "../types";
 import { formatCurrency } from "../utils";
+import { deleteProduct } from "../services/ProductService";
 
 type ProductDetailsProps = {
   product: Product;
 };
 
 export async function action({ params }: ActionFunctionArgs) {
-    console.log(params.id)
-    console.log('desde action')
-    return redirect('/')
+  if (params.id !== undefined) {
+    await deleteProduct(+params.id);
+    return redirect("/");
+  }
 }
 
 export default function ProductDetails({ product }: ProductDetailsProps) {
@@ -34,9 +41,14 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
           </button>
 
           <Form
-          className="w-full"
-          method="POST"
-          action={`productos/${product.id}/eliminar`} //importante! esta url debe ser la misma que en el router 
+            className="w-full"
+            method="POST"
+            action={`productos/${product.id}/eliminar`} //importante! esta url debe ser la misma que en el router
+            onSubmit={(e)=>{
+                if(!confirm('¿Está seguro de que quieres eliminar este producto?')){
+                    e.preventDefault()
+                }
+            }}
           >
             <input
               type="submit"

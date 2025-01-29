@@ -75,11 +75,20 @@ export async function updateProduct(id: Product['id'], data: ProductData) {
             availability: toBoolean(data.availability.toString())
         })
 
-        if(result.success) {
+        if (result.success) {
             const url = `${import.meta.env.VITE_API_URL}/api/v1/products/${id}`
             await axios.put(url, result.output)
         }
 
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export async function deleteProduct(id: Product['id']) {
+    try {
+        const url = `${import.meta.env.VITE_API_URL}/api/v1/products/${id}`
+        await axios.delete(url)
     } catch (error) {
         console.log(error)
     }
