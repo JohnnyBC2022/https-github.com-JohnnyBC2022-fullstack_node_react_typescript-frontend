@@ -1,6 +1,7 @@
-import { Link, LoaderFunctionArgs, redirect} from "react-router-dom";
+import { ActionFunctionArgs, Link, LoaderFunctionArgs, redirect} from "react-router-dom";
 import NewProductForm from "../components/NewProductForm";
-import { getProductById } from "../services/ProductService";
+import { getProductById, updateProduct } from "../services/ProductService";
+import { value } from "valibot";
 
 export async function loader({params}: LoaderFunctionArgs){
   if(params.id !== undefined) {
@@ -12,6 +13,27 @@ export async function loader({params}: LoaderFunctionArgs){
       return product
   }
 }
+
+export async function action({ request, params } : ActionFunctionArgs) {
+  const data = Object.fromEntries(await request.formData());
+
+  let error = "";
+  if (Object.values(data).includes("")) {
+    error = "Todos los campos son obligatorios";
+  }
+
+  if (error.length) {
+    return error;
+  }
+  if(params.id !== undefined) {
+    await updateProduct(+params.id,data)
+
+  }
+
+
+  return redirect('/');
+}
+
 
 export default function EditProduct() {
     
@@ -26,6 +48,8 @@ export default function EditProduct() {
           Volver a Productos
         </Link>
       </div>
+
+      
 
       <NewProductForm/>
     </>

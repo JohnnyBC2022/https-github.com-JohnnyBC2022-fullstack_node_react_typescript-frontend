@@ -4,3 +4,7 @@ export function formatCurrency(amount: number){
         currency: 'EUR'
     }).format(amount)
 }
+
+export function toBoolean(str: String) {
+    return str.toLowerCase() === "true"
+}
