@@ -48,7 +48,7 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
         <div className="flex gap-2 items-center">
           <button
             onClick={() => navigate(`/productos/${product.id}/editar`)}
-            className="bg-teal-600 text-white rounded-lg w-full p-2 uppercase font-bold text-xs text-center hover:bg-teal-500"
+            className="bg-teal-600 text-white rounded-lg w-full p-2 uppercase font-bold text-xs text-center hover:cursor-pointer hover:bg-teal-500"
           >
             Editar
           </button>
@@ -68,7 +68,7 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
             <input
               type="submit"
               value="Eliminar"
-              className="bg-red-600 text-white rounded-lg w-full p-2 uppercase font-bold text-xs text-center hover:bg-red-500"
+              className="bg-red-600 text-white rounded-lg w-full p-2 uppercase font-bold text-xs text-center hover:cursor-pointer hover:bg-red-500"
             />
           </Form>
         </div>
